@@ -1,2 +1,11 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<h1>Long and inifinte listing</h1>
+<p>Here we'll have an infinite amount of items to list.</p>
+
+<div data-controller="loader">
+  <ol data-target="loader.list">
+    <% 20.times do %>
+      <li>an item</li>
+    <% end %>
+  </ol>
+  <button type="button" data-target="loader.button">Load more</button>
+</div>
