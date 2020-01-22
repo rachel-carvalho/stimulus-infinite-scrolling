@@ -3,9 +3,7 @@
 
 <div data-controller="loader">
   <ol data-target="loader.list">
-    <% 5.times do %>
-      <li>an item</li>
-    <% end %>
+    <%= render partial: 'item', collection: @items %>
   </ol>
   <p style="display: none" data-target="loader.loading">Loading...</p>
   <button type="button" data-action="loader#load" data-target="loader.button">Load more</button>
