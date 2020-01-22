@@ -14,8 +14,13 @@ export default class Loader extends Controller {
   connect() {
   }
 
-  load() {
+  async load() {
     this.loadingTarget.style.display = 'block'
     this.buttonTarget.disabled = true
+    const response = await fetch(location.href, {headers: {'X-Requested-With': 'XMLHttpRequest'}})
+    const html = await response.text()
+    this.listTarget.insertAdjacentHTML('beforeend', html)
+    this.loadingTarget.style.display = 'none'
+    this.buttonTarget.disabled = false
   }
 }
