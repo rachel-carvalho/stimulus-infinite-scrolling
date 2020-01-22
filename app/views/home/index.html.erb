@@ -3,9 +3,10 @@
 
 <div data-controller="loader">
   <ol data-target="loader.list">
-    <% 20.times do %>
+    <% 5.times do %>
       <li>an item</li>
     <% end %>
   </ol>
-  <button type="button" data-target="loader.button">Load more</button>
+  <p style="display: none" data-target="loader.loading">Loading...</p>
+  <button type="button" data-action="loader#load" data-target="loader.button">Load more</button>
 </div>
