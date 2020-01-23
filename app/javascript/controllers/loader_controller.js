@@ -11,17 +11,24 @@ export default class Loader extends Controller {
     return this.data.set('page', value)
   }
 
+  get loading() {
+    return this.data.get('loading') == 'true'
+  }
+
+  set loading(value) {
+    this.data.set('loading', value)
+    this.loadingTarget.style.display = value ? 'block' : 'none'
+    this.buttonTarget.disabled = value
+  }
+
   async load() {
-    this.toggleLoading(true)
+    if (this.loading) return
+
+    this.loading = true
     const html = await this.loadNewHTML().catch((e) => console.log(e.message))
     this.page++
     this.listTarget.insertAdjacentHTML('beforeend', html || '')
-    this.toggleLoading(false)
-  }
-
-  toggleLoading(loading) {
-    this.loadingTarget.style.display = loading ? 'block' : 'none'
-    this.buttonTarget.disabled = loading
+    this.loading = false
   }
 
   async loadNewHTML() {
