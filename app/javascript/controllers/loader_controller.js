@@ -14,6 +14,7 @@ export default class Loader extends Controller {
   async load() {
     this.toggleLoading(true)
     const html = await this.loadNewHTML().catch((e) => console.log(e.message))
+    this.page++
     this.listTarget.insertAdjacentHTML('beforeend', html || '')
     this.toggleLoading(false)
   }
@@ -24,7 +25,7 @@ export default class Loader extends Controller {
   }
 
   async loadNewHTML() {
-    const url = location.href
+    const url = `${location.href}?page=${this.page + 1}`
     const response = await fetch(url, {headers: {'X-Requested-With': 'XMLHttpRequest'}})
     if (response.status < 200 || response.status >= 300)
       throw new Error(`HTTP status ${response.status} from ${url} \n\n ${await response.text()}`)
