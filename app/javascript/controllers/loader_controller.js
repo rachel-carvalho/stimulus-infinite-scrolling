@@ -3,6 +3,11 @@ import { Controller } from 'stimulus'
 export default class Loader extends Controller {
   static targets = ['list', 'button', 'loading']
 
+  constructor(context) {
+    super(context)
+    this.onIntersection = this.onIntersection.bind(this)
+  }
+
   get page() {
     return parseInt(this.data.get('page') || (this.page = 1))
   }
@@ -19,6 +24,20 @@ export default class Loader extends Controller {
     this.data.set('loading', value)
     this.loadingTarget.style.display = value ? 'block' : 'none'
     this.buttonTarget.disabled = value
+  }
+
+  connect() {
+    this.observer = new IntersectionObserver(this.onIntersection, {root: null})
+    this.observer.observe(this.buttonTarget)
+  }
+
+  disconnect() {
+    this.observer.disconnect()
+  }
+
+  onIntersection(entries) {
+    const [entry] = entries
+    if (entry.isIntersecting) this.load()
   }
 
   async load() {
