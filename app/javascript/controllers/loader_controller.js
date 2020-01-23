@@ -13,7 +13,7 @@ export default class Loader extends Controller {
 
   async load() {
     this.toggleLoading(true)
-    const html = await this.newHTML().catch((e) => console.log(e.message))
+    const html = await this.loadNewHTML().catch((e) => console.log(e.message))
     this.listTarget.insertAdjacentHTML('beforeend', html || '')
     this.toggleLoading(false)
   }
@@ -23,7 +23,7 @@ export default class Loader extends Controller {
     this.buttonTarget.disabled = loading
   }
 
-  async newHTML() {
+  async loadNewHTML() {
     const url = location.href
     const response = await fetch(url, {headers: {'X-Requested-With': 'XMLHttpRequest'}})
     if (response.status < 200 || response.status >= 300)
